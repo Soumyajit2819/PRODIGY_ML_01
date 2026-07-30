@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data files — download manually from Kaggle
+data/*.csv
+data/*.zip
+
+# Saved models
+models/*.pkl
+models/*.joblib
+
+# Generated outputs
+outputs/*.png
+outputs/*.csv
+outputs/*.json
+outputs/*.txt
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
