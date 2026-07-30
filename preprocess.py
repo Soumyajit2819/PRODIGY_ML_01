@@ -5,12 +5,15 @@ Handles all data loading, EDA, cleaning, encoding, and feature engineering
 for the House Price Prediction task.
 """
 
+import os
+import shutil
 import numpy as np
 import pandas as pd
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import seaborn as sns
+import kagglehub
 
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.model_selection import train_test_split
@@ -19,7 +22,6 @@ from utils import (
     data_path,
     outputs_path,
     ensure_dir,
-    check_dataset_exists,
     summarise_dataframe,
     save_figure,
     set_plot_style,
@@ -49,16 +51,44 @@ FILL_STRATEGY_MAP = {
 # Loading
 # ---------------------------------------------------------------------------
 
+def download_dataset() -> str:
+    """
+    Download the House Prices competition dataset via kagglehub.
+    Copies train.csv into data/ and returns its path.
+    """
+    ensure_dir(data_path())
+    train_csv = data_path("train.csv")
+    if os.path.exists(train_csv):
+        print(f"[INFO] Dataset already present → {train_csv}")
+        return train_csv
+
+    print("[INFO] Downloading House Prices dataset from Kaggle …")
+    dl_path = kagglehub.competition_download("house-prices-advanced-regression-techniques")
+    print(f"[INFO] Downloaded to cache → {dl_path}")
+
+    # Find train.csv anywhere inside the downloaded folder
+    for root, _, files in os.walk(dl_path):
+        for fname in files:
+            if fname == "train.csv":
+                src = os.path.join(root, fname)
+                shutil.copy(src, train_csv)
+                print(f"[INFO] Copied train.csv → {train_csv}")
+                return train_csv
+
+    raise FileNotFoundError(
+        f"train.csv not found inside downloaded path: {dl_path}"
+    )
+
+
 def load_raw_data() -> pd.DataFrame:
     """
-    Load the raw training CSV from data/train.csv.
+    Download (if needed) and load train.csv.
 
     Returns
     -------
     pd.DataFrame  Raw, unmodified training data.
     """
-    filepath = data_path("train.csv")
-    check_dataset_exists(filepath)
+    filepath = download_dataset()
     df = pd.read_csv(filepath)
     print(f"[INFO] Loaded dataset  →  {df.shape[0]} rows × {df.shape[1]} columns")
     summarise_dataframe(df, label="Raw Training Data")

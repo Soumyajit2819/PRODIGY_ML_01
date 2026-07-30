@@ -133,10 +133,11 @@ def plot_feature_importance(model, feature_names: list, top_n: int = 20) -> None
     coefs = np.abs(model.coef_)
     indices = np.argsort(coefs)[::-1][:top_n]
 
+    rev_indices = indices[::-1]
     fig, ax = plt.subplots(figsize=(10, 7))
     ax.barh(
-        [feature_names[i] for i in reversed(indices)],
-        coefs[reversed(indices)],
+        [feature_names[i] for i in rev_indices],
+        coefs[rev_indices],
         color="#4C72B0",
     )
     ax.set_title(f"Top {top_n} Feature Importances\n(|Coefficient| — {type(model).__name__})", fontsize=13)
