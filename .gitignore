@@ -20,15 +20,15 @@ build/
 data/*.csv
 data/*.zip
 
-# Saved models
-models/*.pkl
-models/*.joblib
+# Saved models — track them
+# models/*.pkl
+# models/*.joblib
 
-# Generated outputs
-outputs/*.png
-outputs/*.csv
-outputs/*.json
-outputs/*.txt
+# Generated outputs — track them
+# outputs/*.png
+# outputs/*.csv
+# outputs/*.json
+# outputs/*.txt
 
 # IDE
 .vscode/

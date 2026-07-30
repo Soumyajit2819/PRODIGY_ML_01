@@ -1,0 +1,17 @@
+=======================================================
+   House Price Prediction — Evaluation Report
+=======================================================
+
+Hold-Out Test Set Metrics
+-----------------------------------
+  MAE ($)             : 19729.08
+  MSE ($²)            : 608838319.88
+  RMSE ($)            : 24674.65
+  R² Score            : 0.8751
+
+5-Fold Cross-Validation (Training Set)
+-----------------------------------
+  cv_r2_mean          : 0.8832
+  cv_r2_std           : 0.0066
+  cv_rmse_mean        : 0.1224
+  cv_rmse_std         : 0.0070
